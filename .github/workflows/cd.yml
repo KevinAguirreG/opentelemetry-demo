@@ -45,6 +45,6 @@ jobs:
           file: ./src/${{ matrix.service }}/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ steps.repo_owner.outputs.owner }}/otel-demo-${{ matrix.service }}:latest
+            ghcr.io/${{ steps.repo_owner.outputs.owner }}/devops-project-${{ matrix.service }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
