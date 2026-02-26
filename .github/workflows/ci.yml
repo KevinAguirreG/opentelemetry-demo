@@ -24,16 +24,19 @@ jobs:
           cache: 'npm' 
           cache-dependency-path: src/frontend/package-lock.json
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci 
 
-      - name: Build Check
-        
+      - name: Build Website
         run: npm run build 
 
-      - name: Cypress Headless
-       
-        run: npx cypress run --browser chrome
+      - name: Cypress Run
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: src/frontend
+          start: npm start 
+          wait-on: 'http://localhost:8080' 
+          browser: chrome
 
   test-go:
     name: Go Tests
