@@ -34,12 +34,13 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: src/frontend
-          start: |
-            cp ./utils/telemetry/Instrumentation.js . 
-            npm start
-          wait-on: 'http://localhost:8080' 
+          # Forzamos a Next.js a correr en el 8080
+          start: npx next start -p 8080
+          wait-on: 'http://localhost:8080'
           browser: chrome
-
+        env:
+          # Usamos la ruta completa para evitar el error de "module not found"
+          NODE_OPTIONS: "--require /home/runner/work/opentelemetry-demo/opentelemetry-demo/src/frontend/utils/telemetry/Instrumentation.js"
   test-go:
     name: Go Tests
     runs-on: ubuntu-latest
