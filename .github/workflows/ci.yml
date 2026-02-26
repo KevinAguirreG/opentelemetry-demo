@@ -34,7 +34,9 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: src/frontend
-          start: npm start 
+          start: |
+            cp ./utils/telemetry/Instrumentation.js . 
+            npm start
           wait-on: 'http://localhost:8080' 
           browser: chrome
 
