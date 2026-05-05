@@ -20,7 +20,7 @@ services:
 
   # AdService
   ad:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-ad
+    image: ${IMAGE_NAME}-ad:${DEMO_VERSION}
     container_name: ad
     build:
       context: ./
@@ -54,7 +54,7 @@ services:
 
   # Cart service
   cart:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-cart
+    image: ${IMAGE_NAME}-cart:${DEMO_VERSION}
     container_name: cart
     build:
       context: ./
@@ -87,7 +87,7 @@ services:
 
   # Checkout service
   checkout:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-checkout
+    image: ${IMAGE_NAME}-checkout:${DEMO_VERSION}
     container_name: checkout
     build:
       context: ./
@@ -135,7 +135,7 @@ services:
 
   # Currency service
   currency:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-currency
+    image: ${IMAGE_NAME}-currency:${DEMO_VERSION}
     container_name: currency
     build:
       context: ./
@@ -166,7 +166,7 @@ services:
 
   # Email service
   email:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-email
+    image: ${IMAGE_NAME}-email:${DEMO_VERSION}
     container_name: email
     build:
       context: ./src/email
@@ -195,7 +195,7 @@ services:
 
   # Frontend
   frontend:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-frontend
+    image: ${IMAGE_NAME}-frontend:${DEMO_VERSION}
     container_name: frontend
     build:
       context: ./
@@ -254,7 +254,7 @@ services:
 
   # Frontend Proxy (Envoy)
   frontend-proxy:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-frontend-proxy
+    image: ${IMAGE_NAME}-frontend-proxy:${DEMO_VERSION}
     container_name: frontend-proxy
     build:
       context: ./
@@ -303,7 +303,7 @@ services:
 
   # image-provider
   image-provider:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-image-provider
+    image: ${IMAGE_NAME}-image-provider:${DEMO_VERSION}
     container_name: image-provider
     build:
       context: ./
@@ -330,7 +330,7 @@ services:
 
   # Load Generator
   load-generator:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-load-generator
+    image: ${IMAGE_NAME}-load-generator:${DEMO_VERSION}
     container_name: load-generator
     build:
       context: ./
@@ -369,7 +369,7 @@ services:
 
   # Payment service
   payment:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-payment
+    image: ${IMAGE_NAME}-payment:${DEMO_VERSION}
     container_name: payment
     build:
       context: ./
@@ -399,7 +399,7 @@ services:
 
   # Product Catalog service
   product-catalog:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-product-catalog
+    image: ${IMAGE_NAME}-product-catalog:${DEMO_VERSION}
     container_name: product-catalog
     build:
       context: ./
@@ -417,22 +417,25 @@ services:
       - FLAGD_HOST
       - FLAGD_PORT
       - PRODUCT_CATALOG_PORT
-      - PRODUCT_CATALOG_RELOAD_INTERVAL
       - GOMEMLIMIT=16MiB
       - OTEL_EXPORTER_OTLP_ENDPOINT
       - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
       - OTEL_RESOURCE_ATTRIBUTES
       - OTEL_SERVICE_NAME=product-catalog
-    volumes:
-      - ./src/product-catalog/products:/usr/src/app/products
+      - OTEL_SEMCONV_STABILITY_OPT_IN=database
+      - DB_CONNECTION_STRING=postgres://otelu:otelp@${POSTGRES_HOST}/${POSTGRES_DB}?sslmode=disable
     depends_on:
       otel-collector:
+        condition: service_started
+      flagd:
+        condition: service_started
+      postgresql:
         condition: service_started
     logging: *logging
 
   # Product reviews service
   product-reviews:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-product-reviews
+    image: ${IMAGE_NAME}-product-reviews:${DEMO_VERSION}
     container_name: product-reviews
     build:
       context: ./
@@ -473,7 +476,7 @@ services:
 
   # Quote service
   quote:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-quote
+    image: ${IMAGE_NAME}-quote:${DEMO_VERSION}
     container_name: quote
     build:
       context: ./
@@ -503,7 +506,7 @@ services:
 
   # Recommendation service
   recommendation:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-recommendation
+    image: ${IMAGE_NAME}-recommendation:${DEMO_VERSION}
     container_name: recommendation
     build:
       context: ./
@@ -537,7 +540,7 @@ services:
 
   # Shipping service
   shipping:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-shipping
+    image: ${IMAGE_NAME}-shipping:${DEMO_VERSION}
     container_name: shipping
     build:
       context: ./
@@ -602,7 +605,7 @@ services:
 
   # LLM used by Product Review service
   llm:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-llm
+    image: ${IMAGE_NAME}-llm:${DEMO_VERSION}
     container_name: llm
     build:
       context: ./
@@ -619,6 +622,25 @@ services:
       - FLAGD_PORT
     ports:
       - "${LLM_PORT}"
+    logging: *logging
+
+  # PostgreSQL
+  postgresql:
+    image: ${POSTGRES_IMAGE}
+    container_name: postgresql
+    deploy:
+      resources:
+        limits:
+          memory: 80M
+    restart: unless-stopped
+    ports:
+      - ${POSTGRES_PORT}
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - ./src/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
     logging: *logging
 
   # Valkey used by Cart service

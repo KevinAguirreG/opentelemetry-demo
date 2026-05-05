@@ -19,7 +19,7 @@ services:
   # ******************
   # Accounting service
   accounting:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-accounting
+    image: ${IMAGE_NAME}-accounting:${DEMO_VERSION}
     container_name: accounting
     build:
       context: ./
@@ -48,7 +48,7 @@ services:
 
   # AdService
   ad:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-ad
+    image: ${IMAGE_NAME}-ad:${DEMO_VERSION}
     container_name: ad
     build:
       context: ./
@@ -84,7 +84,7 @@ services:
 
   # Cart service
   cart:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-cart
+    image: ${IMAGE_NAME}-cart:${DEMO_VERSION}
     container_name: cart
     build:
       context: ./
@@ -119,7 +119,7 @@ services:
 
   # Checkout service
   checkout:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-checkout
+    image: ${IMAGE_NAME}-checkout:${DEMO_VERSION}
     container_name: checkout
     build:
       context: ./
@@ -172,7 +172,7 @@ services:
 
   # Currency service
   currency:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-currency
+    image: ${IMAGE_NAME}-currency:${DEMO_VERSION}
     container_name: currency
     build:
       context: ./
@@ -203,7 +203,7 @@ services:
 
   # Email service
   email:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-email
+    image: ${IMAGE_NAME}-email:${DEMO_VERSION}
     container_name: email
     build:
       context: ./
@@ -233,7 +233,7 @@ services:
 
   # Fraud Detection service
   fraud-detection:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-fraud-detection
+    image: ${IMAGE_NAME}-fraud-detection:${DEMO_VERSION}
     container_name: fraud-detection
     build:
       context: ./
@@ -266,7 +266,7 @@ services:
 
   # Frontend
   frontend:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-frontend
+    image: ${IMAGE_NAME}-frontend:${DEMO_VERSION}
     container_name: frontend
     build:
       context: ./
@@ -328,7 +328,7 @@ services:
 
   # Frontend Proxy (Envoy)
   frontend-proxy:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-frontend-proxy
+    image: ${IMAGE_NAME}-frontend-proxy:${DEMO_VERSION}
     container_name: frontend-proxy
     build:
       context: ./
@@ -381,7 +381,7 @@ services:
 
   # image-provider
   image-provider:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-image-provider
+    image: ${IMAGE_NAME}-image-provider:${DEMO_VERSION}
     container_name: image-provider
     build:
       context: ./
@@ -408,7 +408,7 @@ services:
 
   # Load Generator
   load-generator:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-load-generator
+    image: ${IMAGE_NAME}-load-generator:${DEMO_VERSION}
     container_name: load-generator
     build:
       context: ./
@@ -447,7 +447,7 @@ services:
 
   # Payment service
   payment:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-payment
+    image: ${IMAGE_NAME}-payment:${DEMO_VERSION}
     container_name: payment
     build:
       context: ./
@@ -479,7 +479,7 @@ services:
 
   # Product Catalog service
   product-catalog:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-product-catalog
+    image: ${IMAGE_NAME}-product-catalog:${DEMO_VERSION}
     container_name: product-catalog
     build:
       context: ./
@@ -515,7 +515,7 @@ services:
 
   # Product reviews service
   product-reviews:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-product-reviews
+    image: ${IMAGE_NAME}-product-reviews:${DEMO_VERSION}
     container_name: product-reviews
     build:
       context: ./
@@ -560,7 +560,7 @@ services:
 
   # Quote service
   quote:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-quote
+    image: ${IMAGE_NAME}-quote:${DEMO_VERSION}
     container_name: quote
     build:
       context: ./
@@ -590,7 +590,7 @@ services:
 
   # Recommendation service
   recommendation:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-recommendation
+    image: ${IMAGE_NAME}-recommendation:${DEMO_VERSION}
     container_name: recommendation
     build:
       context: ./
@@ -626,7 +626,7 @@ services:
 
   # Shipping service
   shipping:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-shipping
+    image: ${IMAGE_NAME}-shipping:${DEMO_VERSION}
     container_name: shipping
     build:
       context: ./
@@ -686,7 +686,7 @@ services:
 
   # Flagd UI for configuring the feature flag service
   flagd-ui:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-flagd-ui
+    image: ${IMAGE_NAME}-flagd-ui:${DEMO_VERSION}
     container_name: flagd-ui
     build:
       context: ./
@@ -718,7 +718,7 @@ services:
 
   # Kafka used by Checkout, Accounting, and Fraud Detection services
   kafka:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-kafka
+    image: ${IMAGE_NAME}-kafka:${DEMO_VERSION}
     container_name: kafka
     build:
       context: ./
@@ -753,7 +753,7 @@ services:
 
   # LLM used by Product Review service
   llm:
-    image: ${IMAGE_NAME}:${DEMO_VERSION}-llm
+    image: ${IMAGE_NAME}-llm:${DEMO_VERSION}
     container_name: llm
     build:
       context: ./

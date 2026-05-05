@@ -14,11 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         service: [
-          "accounting", "ad", "cart", "checkout", "currency", 
-          "email", "flagd", "flagd-ui", "fraud-detection", "frontend", 
-          "frontend-proxy", "image-provider", "kafka", 
-          "llm", "load-generator", "otel-collector", "payment", 
-          "postgresql", "product-catalog", "quote", "shipping"
+          "accounting", "ad", "cart", "checkout", "currency",
+          "email", "flagd", "flagd-ui", "fraud-detection", "frontend",
+          "frontend-proxy", "image-provider", "kafka",
+          "llm", "load-generator", "otel-collector", "payment",
+          "postgresql", "product-catalog", "product-reviews", "quote",
+          "recommendation", "shipping"
         ]
 
     steps:
